@@ -75,5 +75,4 @@ go get github.com/fatih/color
 go get github.com/gorilla/mux
 go mod tidy
 
-
 pause
