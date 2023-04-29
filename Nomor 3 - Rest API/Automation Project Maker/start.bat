@@ -52,7 +52,35 @@ echo 	}>> CLS.go
 echo }>> CLS.go
 
 :: ---------------------------- [ Log-History.go ] ----------------------------
-:: KOSONG - NEXT UPDATE SAJA
+echo package Utils>> Log-History.go
+echo.>> Log-History.go
+echo import (>> Log-History.go
+echo 	"fmt">> Log-History.go
+echo 	"github.com/fatih/color">> Log-History.go
+echo 	"time">> Log-History.go
+echo )>> Log-History.go
+echo.>> Log-History.go
+echo func Logger(options int, msg string){>> Log-History.go
+echo 	now := time.Now()>> Log-History.go
+echo.>> Log-History.go
+echo 	grn := color.New(color.FgHiGreen)>> Log-History.go
+echo 	cyn := color.New(color.FgHiCyan)>> Log-History.go
+echo 	red := color.New(color.FgHiRed)>> Log-History.go
+echo 	yel := color.New(color.FgHiYellow)>> Log-History.go
+echo.>> Log-History.go
+echo 	fmt.Print(" [")>> Log-History.go
+echo 	yel.Printf("%s", now.Format("15:04:05 2006/01/02"))>> Log-History.go
+echo 	fmt.Print("] ")>> Log-History.go
+echo 	if options == 1 {>> Log-History.go
+echo 		cyn.Print("INFO")>> Log-History.go
+echo 	} else if options == 2 {>> Log-History.go
+echo 		red.Print("ERROR")>> Log-History.go
+echo 	} else if options == 3 {>> Log-History.go
+echo 		grn.Print("EXIT")>> Log-History.go
+echo 	}>> Log-History.go
+echo.>> Log-History.go
+echo 	fmt.Printf(": %s\n", msg)>> Log-History.go
+echo }>> Log-History.go
 
 :: -------------------------- [ init project ./Controllers ] --------------------------
 pushd ..
