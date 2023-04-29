@@ -249,6 +249,7 @@ echo module Rest-API/Utils> go.mod
 echo.>> go.mod
 echo %ver%>> go.mod
 go get github.com/fatih/color
+go mod tidy
 move go.mod Utils/
 
 pause
