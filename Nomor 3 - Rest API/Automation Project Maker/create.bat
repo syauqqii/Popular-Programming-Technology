@@ -218,9 +218,26 @@ echo.>> Log-History.go
 echo 	fmt.Printf(": %%s\n", msg)>> Log-History.go
 echo }>> Log-History.go
 
-:: -------------------------- [ init project ./Controllers ] --------------------------
+:: -------------------------- [ init project ] --------------------------
 pushd ..
+go work init
+set "ver="
+for /f "delims=" %%i in ('type go.work ^| findstr /r /c:".*"') do (
+    set "ver=%%i"
+    goto :done
+)
+:done
+echo.>> go.work
+echo use (>> go.work
+echo  ./Controllers>> go.work
+echo  ./Utils>> go.work
+echo )>> go.work
+
+:: -------------------------- [ init project ./Controllers ] --------------------------
 go mod init Rest-API
+echo module Rest-API/Controllers> go.mod
+echo.>> go.mod
+echo %ver%>> go.mod
 go get github.com/fatih/color
 go get github.com/gorilla/mux
 go mod tidy
@@ -228,14 +245,9 @@ move go.mod Controllers/
 
 :: -------------------------- [ init project ./Utils ] --------------------------
 go mod init Rest-API
+echo module Rest-API/Utils> go.mod
+echo.>> go.mod
+echo %ver%>> go.mod
 move go.mod Utils/
-
-:: -------------------------- [ init project ] --------------------------
-go work init
-echo.>> go.work
-echo use (>> go.work
-echo  ./Controllers>> go.work
-echo  ./Utils>> go.work
-echo )>> go.work
 
 pause
