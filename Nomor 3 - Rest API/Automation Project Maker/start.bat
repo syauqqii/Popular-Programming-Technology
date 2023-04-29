@@ -40,40 +40,25 @@ pushd Controllers
 type nul > Logic-CRUD.go
 
 :: ---------------------------- [ Logic-CRUD.go ] ----------------------------
-echo package Controllers>> Logic-CRUD.go
-echo.>> Logic-CRUD.go
-echo import (>> Logic-CRUD.go
-echo 	"encoding/json">> Logic-CRUD.go
-echo 	"net/http">> Logic-CRUD.go
-echo )>> Logic-CRUD.go
-echo.>> Logic-CRUD.go
-echo type Data struct {>> Logic-CRUD.go
-echo 	Name	string `json:"name"`>> Logic-CRUD.go
-echo 	NIM	string `json:"nim"`>> Logic-CRUD.go
-echo 	Alamat	string `json:"alamat"`>> Logic-CRUD.go
-echo }>> Logic-CRUD.go
-echo.>> Logic-CRUD.go
-echo var datas []Data>> Logic-CRUD.go
-echo.>> Logic-CRUD.go
-echo func CreateData(response http.ResponseWriter, request *http.Request){>> Logic-CRUD.go
-echo 	json.NewEncoder(response).Encode(datas)>> Logic-CRUD.go
-echo }>> Logic-CRUD.go
-echo.>> Logic-CRUD.go
-echo func ReadData(response http.ResponseWriter, request *http.Request){>> Logic-CRUD.go
-echo 	var data Data>> Logic-CRUD.go
-echo.>> Logic-CRUD.go
-echo 	_ = json.NewDecoder^(request.Body^).Decode^(^&data^)>> Logic-CRUD.go
-echo 	datas = append(datas, data)>> Logic-CRUD.go
-echo.>> Logic-CRUD.go
-echo 	json.NewEncoder(response).Encode(data)>> Logic-CRUD.go
-echo }>> Logic-CRUD.go
+:: KOSONG - NEXT UPDATE SAJA
 
+:: -------------------------- [ file processing ] --------------------------
+pushd ..
+mkdir Utils
+pushd Utils
+type nul > CLS.go
+type nul > Log-History.go
 
-:: -------------------------- [ init project ] --------------------------
+:: -------------------------- [ init project ./Controllers ] --------------------------
 pushd ..
 go mod init Rest-API
 go get github.com/fatih/color
 go get github.com/gorilla/mux
 go mod tidy
+move go.mod Controllers/
+
+:: -------------------------- [ init project ./Utils ] --------------------------
+go mod init Rest-API
+move go.mod Utils/
 
 pause
