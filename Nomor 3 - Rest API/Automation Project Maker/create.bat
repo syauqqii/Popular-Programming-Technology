@@ -248,6 +248,7 @@ go mod init Rest-API
 echo module Rest-API/Utils> go.mod
 echo.>> go.mod
 echo %ver%>> go.mod
+go get github.com/fatih/color
 move go.mod Utils/
 
 pause
