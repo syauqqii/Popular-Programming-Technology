@@ -25,6 +25,12 @@ pushd Utils
 type nul > CLS.go
 type nul > Log-History.go
 
+:: ---------------------------- [ CLS.go ] ----------------------------
+:: KOSONG - NEXT UPDATE SAJA
+
+:: ---------------------------- [ Log-History.go ] ----------------------------
+:: KOSONG - NEXT UPDATE SAJA
+
 :: -------------------------- [ init project ./Controllers ] --------------------------
 pushd ..
 go mod init Rest-API
@@ -36,5 +42,13 @@ move go.mod Controllers/
 :: -------------------------- [ init project ./Utils ] --------------------------
 go mod init Rest-API
 move go.mod Utils/
+
+:: -------------------------- [ init project ] --------------------------
+go work init
+echo.>> go.work
+echo use (>> go.work
+echo 	./Controllers>> go.work
+echo  ./Utils>> go.work
+echo )>> go.work
 
 pause
