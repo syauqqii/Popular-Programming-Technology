@@ -47,7 +47,7 @@ move go.mod Utils/
 go work init
 echo.>> go.work
 echo use (>> go.work
-echo 	./Controllers>> go.work
+echo  ./Controllers>> go.work
 echo  ./Utils>> go.work
 echo )>> go.work
 
