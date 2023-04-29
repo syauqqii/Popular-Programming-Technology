@@ -8,7 +8,74 @@ pushd Rest-API
 type nul > main.go
 
 :: ------------------------------ [ main.go ] ------------------------------
-:: KOSONG - NEXT UPDATE SAJA
+echo package main>> main.go
+echo.>> main.go
+echo import (>> main.go
+echo 	"fmt">> main.go
+echo 	"encoding/json">> main.go
+echo 	"github.com/fatih/color">> main.go
+echo 	"github.com/gorilla/mux">> main.go
+echo 	"log">> main.go
+echo 	"net/http">> main.go
+echo 	"Rest-API/Controllers">> main.go
+echo 	"Rest-API/Utils">> main.go
+echo 	"os">> main.go
+echo 	"os/signal">> main.go
+echo 	"syscall">> main.go
+echo 	"io/ioutil">> main.go
+echo )>> main.go
+echo.>> main.go
+echo func main() {>> main.go
+echo 	Utils.ClearScreen()>> main.go
+echo.>> main.go
+echo 	serv := color.New(color.FgCyan, color.Underline)>> main.go
+echo 	const port = ":5050">> main.go
+echo.>> main.go
+echo 	fmt.Print("\n > Server running on: ")>> main.go
+echo 	serv.Printf("http://localhost%s", port)>> main.go
+echo 	fmt.Println("\n\n -------------------- [ LOG History ] --------------------\n")>> main.go
+echo.>> main.go
+echo 	router := mux.NewRouter()>> main.go
+echo.>> main.go
+echo 	router.HandleFunc("/nama", Controllers.CreateData).Methods("POST")>> main.go
+echo 	router.HandleFunc("/semuadata", Controllers.ReadData).Methods("GET")>> main.go
+echo.>> main.go
+echo 	router.NotFoundHandler = http.HandlerFunc(func(response http.ResponseWriter, request *http.Request){>> main.go
+echo 		response.Header().Set("Content-Type", "application/json")>> main.go
+echo         response.WriteHeader(http.StatusNotFound)>> main.go
+echo.>> main.go
+echo 	    dataL := map[string]string{>> main.go
+echo 	    	"get": "http://localhost:5050/semuadata",>> main.go
+echo 	        "post": "http://localhost:5050/nama",>> main.go
+echo 	    }>> main.go
+echo.>> main.go
+echo 	    jsonData, _ := json.Marshal(map[string]interface{}{>> main.go
+echo 	        "status":  "Error",>> main.go
+echo 	        "message": dataL,>> main.go
+echo 	    })>> main.go
+echo.>> main.go
+echo 	    fmt.Fprint(response, string(jsonData))>> main.go
+echo 	    Utils.Logger(2, "Bad Request 'Not Found Router' -> Status Not Found")>> main.go
+echo 	})>> main.go
+echo.>> main.go
+echo 	server := &http.Server{Addr: port, Handler: router}>> main.go
+echo.>> main.go
+echo 	sigintChan := make(chan os.Signal, 1)>> main.go
+echo 	signal.Notify(sigintChan, syscall.SIGINT)>> main.go
+echo.>> main.go
+echo 	go func() {>> main.go
+echo 		<-sigintChan>> main.go
+echo 		Utils.Logger(3, "Shutting Down Server Success")>> main.go
+echo.>> main.go
+echo 		if err := server.Close(); err != nil {>> main.go
+echo 			Utils.Logger(2, "err")>> main.go
+echo 		}>> main.go
+echo 		os.Exit(0)>> main.go
+echo 	}()>> main.go
+echo.>> main.go
+echo 	log.Fatal(server.ListenAndServe())>> main.go
+echo 	log.SetOutput(ioutil.Discard)>> main.go
+echo }>> main.go
 
 :: -------------------------- [ file processing ] --------------------------
 mkdir Controllers
