@@ -26,7 +26,30 @@ type nul > CLS.go
 type nul > Log-History.go
 
 :: ---------------------------- [ CLS.go ] ----------------------------
-:: KOSONG - NEXT UPDATE SAJA
+echo package Utils>> CLS.go
+echo.>> CLS.go
+echo import (>> CLS.go
+echo 	"fmt">> CLS.go
+echo 	"os">> CLS.go
+echo 	"os/exec">> CLS.go
+echo 	"runtime">> CLS.go
+echo )>> CLS.go
+echo.>> CLS.go
+echo func ClearScreen(){>> CLS.go
+echo 	_os := runtime.GOOS>> CLS.go
+echo.>> CLS.go
+echo 	if _os == "windows" {>> CLS.go
+echo 		cmd := exec.Command("cmd", "/c", "cls")>> CLS.go
+echo 		cmd.Stdout = os.Stdout>> CLS.go
+echo 		cmd.Run()>> CLS.go
+echo 	} else if _os == "linux" {>> CLS.go
+echo 		cmd := exec.Command("clear")>> CLS.go
+echo 		cmd.Stdout = os.Stdout>> CLS.go
+echo 		cmd.Run()>> CLS.go
+echo   	} else {>> CLS.go
+echo 		fmt.Print()>> CLS.go
+echo 	}>> CLS.go
+echo }>> CLS.go
 
 :: ---------------------------- [ Log-History.go ] ----------------------------
 :: KOSONG - NEXT UPDATE SAJA
