@@ -8,5 +8,5 @@ Untuk mendownloadnya klik [Rest-API](https://github.com/syauqqii/Popular-Program
 ## Screenshot Program
 <img src="output.png">
 
-## Penjelasan Youtube
+## Penjelasan via Youtube
 [<img src = "https://img.shields.io/badge/youtube-%23E4405F.svg?&style=for-the-badge&logo=youtube&logoColor=white">](https://youtube.com/)
