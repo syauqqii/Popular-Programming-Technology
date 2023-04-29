@@ -1,3 +1,4 @@
+:: Creatornya siafh lgi klo bukan syh :)
 @ECHO OFF
 cls
 
