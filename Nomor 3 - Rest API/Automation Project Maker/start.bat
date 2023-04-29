@@ -3,7 +3,7 @@
 cls
 
 :: -------------------------- [ file processing ] --------------------------
-chdir /d D:\
+:: chdir /d D:\
 mkdir Rest-API
 pushd Rest-API
 type nul > main.go
@@ -33,7 +33,7 @@ echo 	serv := color.New(color.FgCyan, color.Underline)>> main.go
 echo 	const port = ":5050">> main.go
 echo.>> main.go
 echo 	fmt.Print("\n > Server running on: ")>> main.go
-echo 	serv.Printf("http://localhost%s", port)>> main.go
+echo 	serv.Printf("http://localhost%%s", port)>> main.go
 echo 	fmt.Println("\n\n -------------------- [ LOG History ] --------------------\n")>> main.go
 echo.>> main.go
 echo 	router := mux.NewRouter()>> main.go
@@ -59,13 +59,13 @@ echo 	    fmt.Fprint(response, string(jsonData))>> main.go
 echo 	    Utils.Logger(2, "Bad Request 'Not Found Router' -> Status Not Found")>> main.go
 echo 	})>> main.go
 echo.>> main.go
-echo 	server := &http.Server{Addr: port, Handler: router}>> main.go
+echo 	server := ^&http.Server{Addr: port, Handler: router}>> main.go
 echo.>> main.go
 echo 	sigintChan := make(chan os.Signal, 1)>> main.go
 echo 	signal.Notify(sigintChan, syscall.SIGINT)>> main.go
 echo.>> main.go
 echo 	go func() {>> main.go
-echo 		<-sigintChan>> main.go
+echo 		^<-sigintChan>> main.go
 echo 		Utils.Logger(3, "Shutting Down Server Success")>> main.go
 echo.>> main.go
 echo 		if err := server.Close(); err != nil {>> main.go
@@ -84,7 +84,75 @@ pushd Controllers
 type nul > Logic-CRUD.go
 
 :: ---------------------------- [ Logic-CRUD.go ] ----------------------------
-:: KOSONG - NEXT UPDATE SAJA
+echo package Controllers>> Logic-CRUD.go
+echo.>> Logic-CRUD.go
+echo import (>> Logic-CRUD.go
+echo 	"encoding/json">> Logic-CRUD.go
+echo 	"fmt">> Logic-CRUD.go
+echo 	"net/http">> Logic-CRUD.go
+echo 	"Rest-API/Utils">> Logic-CRUD.go
+echo )>> Logic-CRUD.go
+echo.>> Logic-CRUD.go
+echo type Mahasiswa struct {>> Logic-CRUD.go
+echo 	Nama   string `json:"Nama"`>> Logic-CRUD.go
+echo 	NIM    string `json:"Nim"`>> Logic-CRUD.go
+echo 	Alamat string `json:"Alamat"`>> Logic-CRUD.go
+echo }>> Logic-CRUD.go
+echo.>> Logic-CRUD.go
+echo var data []Mahasiswa>> Logic-CRUD.go
+echo.>> Logic-CRUD.go
+echo func ReadData(response http.ResponseWriter, request *http.Request) {>> Logic-CRUD.go
+echo 	response.Header().Set("Content-Type", "application/json")>> Logic-CRUD.go
+echo.>> Logic-CRUD.go
+echo 	if len(data) == 0 {>> Logic-CRUD.go
+echo 		response.WriteHeader(http.StatusNotFound)>> Logic-CRUD.go
+echo 		fmt.Fprint(response, `{"status":"Error", "message":"Data Not Found"}`)>> Logic-CRUD.go
+echo 		Utils.Logger(2, "func 'ReadData()' -> Data not found")>> Logic-CRUD.go
+echo 		return>> Logic-CRUD.go
+echo 	}>> Logic-CRUD.go
+echo.>> Logic-CRUD.go
+echo 	extractData, err := json.Marshal(data)>> Logic-CRUD.go
+echo.>> Logic-CRUD.go
+echo 	if err != nil {>> Logic-CRUD.go
+echo 		response.WriteHeader(http.StatusInternalServerError)>> Logic-CRUD.go
+echo 		fmt.Fprint(response, `{"status":"Error", "message":"Internal Server Error"}`)>> Logic-CRUD.go
+echo 		Utils.Logger(2, "func 'ReadData()' -> Internal Server Error")>> Logic-CRUD.go
+echo 		return>> Logic-CRUD.go
+echo 	}>> Logic-CRUD.go
+echo.>> Logic-CRUD.go
+echo 	fmt.Fprint(response, string(extractData))>> Logic-CRUD.go
+echo 	Utils.Logger(1, "func 'ReadData()' -> Success Show All Data")>> Logic-CRUD.go
+echo }>> Logic-CRUD.go
+echo.>> Logic-CRUD.go
+echo func CreateData(response http.ResponseWriter, request *http.Request) {>> Logic-CRUD.go
+echo 	response.Header().Set("Content-Type", "application/json")>> Logic-CRUD.go
+echo.>> Logic-CRUD.go
+echo 	var person Mahasiswa>> Logic-CRUD.go
+echo.>> Logic-CRUD.go
+echo 	person.Nama   = request.FormValue("Nama")>> Logic-CRUD.go
+echo 	person.NIM    = request.FormValue("NIM")>> Logic-CRUD.go
+echo 	person.Alamat = request.FormValue("Alamat")>> Logic-CRUD.go
+echo.>> Logic-CRUD.go
+echo 	if person.Nama == "" ^|^| person.NIM == "" ^|^| person.Alamat == "" {>> Logic-CRUD.go
+echo 		response.WriteHeader(http.StatusBadRequest)>> Logic-CRUD.go
+echo 		fmt.Fprint(response, `{"status":"Error", "message":"Bad Request"}`)>> Logic-CRUD.go
+echo 		Utils.Logger(2, "func 'CreateData()' -> Bad Request")>> Logic-CRUD.go
+echo 		return>> Logic-CRUD.go
+echo 	}>> Logic-CRUD.go
+echo.>> Logic-CRUD.go
+echo 	data = append(data, person)>> Logic-CRUD.go
+echo 	extractData, err := json.Marshal(person)>> Logic-CRUD.go
+echo.>> Logic-CRUD.go
+echo 	if err != nil {>> Logic-CRUD.go
+echo 		response.WriteHeader(http.StatusInternalServerError)>> Logic-CRUD.go
+echo 		fmt.Fprint(response, `{"status":"Error", "message":"Internal Server Error"}`)>> Logic-CRUD.go
+echo 		Utils.Logger(2, "func 'CreateData()' -> Internal Server Error")>> Logic-CRUD.go
+echo 		return>> Logic-CRUD.go
+echo 	}>> Logic-CRUD.go
+echo.>> Logic-CRUD.go
+echo 	fmt.Fprint(response, string(extractData))>> Logic-CRUD.go
+echo 	Utils.Logger(1, "func 'CreateData()' -> Success Add Data")>> Logic-CRUD.go
+echo }>> Logic-CRUD.go
 
 :: -------------------------- [ file processing ] --------------------------
 pushd ..
@@ -137,7 +205,7 @@ echo 	red := color.New(color.FgHiRed)>> Log-History.go
 echo 	yel := color.New(color.FgHiYellow)>> Log-History.go
 echo.>> Log-History.go
 echo 	fmt.Print(" [")>> Log-History.go
-echo 	yel.Printf("%s", now.Format("15:04:05 2006/01/02"))>> Log-History.go
+echo 	yel.Printf("%%s", now.Format("15:04:05 2006/01/02"))>> Log-History.go
 echo 	fmt.Print("] ")>> Log-History.go
 echo 	if options == 1 {>> Log-History.go
 echo 		cyn.Print("INFO")>> Log-History.go
@@ -147,7 +215,7 @@ echo 	} else if options == 3 {>> Log-History.go
 echo 		grn.Print("EXIT")>> Log-History.go
 echo 	}>> Log-History.go
 echo.>> Log-History.go
-echo 	fmt.Printf(": %s\n", msg)>> Log-History.go
+echo 	fmt.Printf(": %%s\n", msg)>> Log-History.go
 echo }>> Log-History.go
 
 :: -------------------------- [ init project ./Controllers ] --------------------------
