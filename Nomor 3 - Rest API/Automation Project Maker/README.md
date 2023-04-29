@@ -12,3 +12,4 @@ NOTE: Save dengan ekstension (.bat)
 Buka file tersebut, tunggu prosesnya selesai, kelar :)
 
 ## Informasi
+[<img src = "https://img.shields.io/badge/youtube-%23E4405F.svg?&style=for-the-badge&logo=youtube&logoColor=white">](https://youtu.be/o09JqIsbd3A)
