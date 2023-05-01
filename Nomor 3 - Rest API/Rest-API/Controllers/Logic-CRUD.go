@@ -180,3 +180,22 @@ func ReadData(response http.ResponseWriter, request *http.Request) {
 		Utils.Logger(3, "func 'ReadData()' -> Berhasil menampilkan semua data.")
 	}
 }
+
+func HandleNotFound(response http.ResponseWriter, request *http.Request){
+	response.Header().Set("Content-Type", "application/json")
+	response.WriteHeader(http.StatusNotFound)
+
+	array := map[string]string{
+		"get": "http://localhost:5050/semuadata",
+		"post": "http://localhost:5050/nama",
+	}
+
+	jsonData, _ := json.Marshal(map[string]interface{}{
+		"status":  "error",
+		"message": "route tidak ditemukan!",
+		"route": array,
+	})
+
+	fmt.Fprint(response, string(jsonData))
+	Utils.Logger(2, "func 'HandleNotFound()' -> Route tidak ditemukan.")
+}
