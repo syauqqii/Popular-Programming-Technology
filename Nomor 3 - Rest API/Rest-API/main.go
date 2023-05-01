@@ -89,6 +89,6 @@ func main() {
 	 * serta handle jika terdapat error pada server maka akan exit (function utils.logger params 4 [FATAL])
 	 */
 	if err := server.ListenAndServe(); err != nil {
-	    Utils.Logger(4, err.Error())
+		Utils.Logger(4, fmt.Sprintf("%s", err))
 	}
 }
