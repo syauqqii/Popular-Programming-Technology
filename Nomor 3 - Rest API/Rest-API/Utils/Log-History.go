@@ -23,15 +23,15 @@ import (
 )
 
 // Set variable warna, untuk mempermudah pemanggilan. (variable untuk global)
-var Serv := color.New(color.FgHiCyan, color.Underline) // => Cyan Terang + Garis Bawah
+var Serv = color.New(color.FgHiCyan, color.Underline) // => Cyan Terang + Garis Bawah
 
 // Set variable warna, untuk mempermudah pemanggilan. (variable untuk file ini - bukan global)
-var white  := color.New(color.FgHiWhite)  // => Putih Terang
-var red    := color.New(color.FgHiRed)    // => Merah Terang
-var green  := color.New(color.FgHiGreen)  // => Hijau Terang
-var yellow := color.New(color.FgHiYellow) // => Kuning Terang
-var cyan   := color.New(color.FgHiCyan)   // => Cyan Terang
-var fatal  := color.New(color.FgRed)      // => Merah
+var white  = color.New(color.FgHiWhite)  // => Putih Terang
+var red    = color.New(color.FgHiRed)    // => Merah Terang
+var green  = color.New(color.FgHiGreen)  // => Hijau Terang
+var yellow = color.New(color.FgHiYellow) // => Kuning Terang
+var cyan   = color.New(color.FgHiCyan)   // => Cyan Terang
+var fatal  = color.New(color.FgRed)      // => Merah
 
 /* Created by Dimas Syauqi Syafa - 2502004405. */
 
