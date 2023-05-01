@@ -80,7 +80,7 @@ func main() {
 		Utils.Logger(3, "Berhasil mematikan server.")
 
 		if err := server.Close(); err != nil {
-			Utils.Logger(2, err)
+			Utils.Logger(2, fmt.Sprintf("%s", err))
 		}
 		os.Exit(0)
 	}()
