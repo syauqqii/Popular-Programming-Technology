@@ -27,8 +27,12 @@ import (
 /* Function Logger
  * Fungsi ini saya buat untuk menampilkan custom log history. 
  *
- * @Params opt int    -> 1. INFO | 2. ERROR | 3. SUCCESS | 4. FATAL
- * @Params msg string -> {pesan} / {message}
+ * @Params opt int    
+ *	-> 1. INFO | 2. ERROR | 3. SUCCESS | 4. FATAL
+ *	  (HiCyan) | (HiRed)  | (HiGreen)  | (Red)
+ *
+ * @Params msg string
+ *	-> {pesan} / {message}
  */
 func Logger(opt int, msg string) {
 	// Set variable now untuk mendapatkan waktu valid saat variable di set.
