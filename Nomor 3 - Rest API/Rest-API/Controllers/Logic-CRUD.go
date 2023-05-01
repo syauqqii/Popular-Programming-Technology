@@ -51,6 +51,15 @@ var data []Mahasiswa
 
 /* Created by Dimas Syauqi Syafa - 2502004405. */
 
+/* Function CreateData
+ * Fungsi ini saya buat untuk menambahkan data ke array of struct (line code: 50). 
+ *
+ * @Params response http.ResponseWriter
+ *	-> params ini akan mengembalikan proses dari handle request user
+ *
+ * @Params request *http.Request
+ *	-> params ini akan menghandle request body user, (formvalue Nama, NIM, Alamat)
+ */
 func CreateData(response http.ResponseWriter, request *http.Request) {
 	// Set respon MIME type json, bertujuan untuk memberi tau user bahwa output ini merupakan json.
 	response.Header().Set("Content-Type", "application/json")
@@ -86,7 +95,7 @@ func CreateData(response http.ResponseWriter, request *http.Request) {
 		return
 	} else {
 		/* Jika semua data terisi (Nama, NIM, Alamat) selanjutnya kita akan melakukan penambahan data
-		 * kita akan menambahkan data person (line code 62) sebagai penyimpanan sementara untuk struct Mahasiwa 
+		 * kita akan menambahkan data person (line code 71) sebagai penyimpanan sementara untuk struct Mahasiwa 
 		 * ke dalam array of struct data (line code 50).
 		 */
 		data = append(data, person)
@@ -121,26 +130,53 @@ func CreateData(response http.ResponseWriter, request *http.Request) {
 
 /* Created by Dimas Syauqi Syafa - 2502004405. */
 
+/* Function CreateData
+ * Fungsi ini saya buat untuk menampilakan semua data yang ada di array of struct 'data' (line code: 50). 
+ *
+ * @Params response http.ResponseWriter
+ *	-> params ini akan mengembalikan proses dari handle request user
+ *
+ * @Params request *http.Request
+ *	-> params ini akan menghandle request body user, (formvalue Nama, NIM, Alamat)
+ */
 func ReadData(response http.ResponseWriter, request *http.Request) {
 	// Set respon MIME type json, bertujuan untuk memberi tau user bahwa output ini merupakan json.
 	response.Header().Set("Content-Type", "application/json")
 
+	/* section IF untuk mengecek apakah data (array of struct) masih kosong ? isEmpty -> handle
+	 * maka akan return code 404 Not Found
+	 * mengemblikan respon dalam bentuk json dengan pesan yang tertera di code saya. 
+	 * menampilkan log di console untuk mengetahui apa yang telah terjadi (untuk developer) */
 	if len(data) == 0 {
 		response.WriteHeader(http.StatusNotFound)
-		fmt.Fprint(response, `{"status":"Error", "message":"Data Not Found"}`)
-		Utils.Logger(2, "func 'ReadData()' -> Data not found")
+		fmt.Fprint(response, `{"status":"error", "message":"silahkan tambah data terlebih dahulu di route /nama"}`)
+		Utils.Logger(1, "func 'ReadData()' -> Data dalam array of struct masih kosong.")
 		return
 	}
 
-	extractData, err := json.Marshal(data)
-
-	if err != nil {
+	/* Selanjutnya, saya membuat code untuk mengekstrak data ke dalam array (json)
+	 * dengan menggunakan function marshal yang memiliki 2 return variable
+	 * 1. return untuk datanya, saya menggunakan extractData
+	 * 2. return untuk error, saya menggunakan err
+	 *
+	 * pada logicnya, ketika err ! nil (kosong) / maksudnya variable error terisi,
+	 * maka program akan lanjut ke section IF yaitu handle error
+	 * dengan logic : return code 500 - Internal Server Error
+	 *		  mengembalikan respon dalam bentuk JSON ke user / client
+	 *		  mengeluarkan output error dalam bentuk log di console
+	 *
+	 * jika proses marshal aman, lanjut masuk ke section ELSE
+	 * dengan logic : saya tidak set return code, karena secara default sudah 200 OK
+	 * 		  saya tampilkan response semua data (yang ada pada array of struct) dalam bentuk json,
+	 * 		  saya tampilkan output di console untuk log history
+	 */
+	if extractData, err := json.Marshal(data); err != nil {
 		response.WriteHeader(http.StatusInternalServerError)
-		fmt.Fprint(response, `{"status":"Error", "message":"Internal Server Error"}`)
-		Utils.Logger(2, "func 'ReadData()' -> Internal Server Error")
+		fmt.Fprint(response, `{"status":"error", "message":"terjadi kesalahan pada server."}`)
+			Utils.Logger(2, "func 'ReadData()' -> Terjadi error saat marshal data (data->array json).")
 		return
+	} else {
+		fmt.Fprint(response, string(extractData))
+		Utils.Logger(3, "func 'ReadData()' -> Berhasil menampilkan semua data.")
 	}
-
-	fmt.Fprint(response, string(extractData))
-	Utils.Logger(1, "func 'ReadData()' -> Success Show All Data")
 }
