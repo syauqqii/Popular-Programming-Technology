@@ -9,11 +9,9 @@ package main
 /* Import Package / Library
  * Untuk memberikan fitur / fungsi tambahan yang lebih fleksible untuk program ini. */
 import (
-	"encoding/json"
 	"fmt"
 	"github.com/gorilla/mux"
 	"io/ioutil"
-	"log"
 	"net/http"
 	"os"
 	"os/signal"
@@ -56,22 +54,41 @@ func main() {
 	 */
 	router.NotFoundHandler = http.HandlerFunc(Controllers.HandleNotFound)
 
-	
+	/* variable server saya set untuk membuat sebuat object / instance dari http.Server
+	 * yang bertujuan untuk membuat server HTTP */
 	server := &http.Server{Addr: port, Handler: router}
 
-	sigintChan := make(chan os.Signal, 1)
-	signal.Notify(sigintChan, syscall.SIGINT)
+	/* Logic Handle CTRL + C, References : https://pkg.go.dev/os/signal
+	 * disini saya membuat sebuah program untuk handle jika developer menekan CTRL + C
+	 * supaya tidak ada output yang menggangu ketika kita menekan CTRL + C saat program dijalankan.
+	 *
+	 * SIGINT (interrupt signal) akan dihasilkan ketika user menekan CTRL + C
+	 *
+	 * pada variable isPressedCTRLC akan menunggu adanya sinyal CTRL+C (SIGINT)
+	 * pada function signal.Notify() akan memberitahu bahwa ada sinyal yang ditangkap ketika CTRL + C ditekan
+	 */
+	isPressedCTRLC := make(chan os.Signal, 1)
+	signal.Notify(isPressedCTRLC, syscall.SIGINT)
 
+	/* Pada fungsi tanpa nama ini (goroutine) / anonymous function
+	 * berfungsi untuk menunggu SIGINT di tekan
+	 * jika key pressed, maka akan menampilakn log pada console,
+	 * dilanjut untuk cek, saat server di tutup apakah terjadi error, jika tidak maka exit
+	 * jika terjadi error maak akan menampilkan error di log console.
+	 */
 	go func() {
-		<-sigintChan
-		Utils.Logger(3, "Shutting Down Server Success")
+		<-isPressedCTRLC
+		Utils.Logger(3, "Berhasil mematikan server.")
 
 		if err := server.Close(); err != nil {
-			Utils.Logger(2, "err")
+			Utils.Logger(2, err)
 		}
 		os.Exit(0)
 	}()
 
-	log.Fatal(server.ListenAndServe())
-	log.SetOutput(ioutil.Discard)
+	/* pada code dibawah akan menjalankan server dengan port yang telah di tentukan diatas (line code 59)
+	 * serta handle jika terdapat error pada server maka akan exit (function utils.logger params 4 [FATAL])
+	 */
+	Utils.Logger(4, server.ListenAndServe())
+	// log.SetOutput(ioutil.Discard)
 }
