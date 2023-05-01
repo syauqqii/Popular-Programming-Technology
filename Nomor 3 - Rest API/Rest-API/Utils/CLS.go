@@ -9,6 +9,8 @@ package Utils
 /* Import Package / Library
  * Untuk memberikan fitur / fungsi tambahan yang lebih fleksible untuk program ini. */
 import (
+	/* Library os saya gunakan untuk redirect output (os.Stdout) dari command cmd ke console supaya
+	 * dapat membersihkan console serta dieksekusi seperti output new line (bersihkan console). */
 	"os"
 	
 	/* Runtime bawaan go lang yang dapat membuat sebuah instance 'Cmd' dan 'Run'
