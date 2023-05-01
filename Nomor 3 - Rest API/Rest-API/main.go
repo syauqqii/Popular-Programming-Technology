@@ -11,7 +11,6 @@ package main
 import (
 	"fmt"
 	"github.com/gorilla/mux"
-	"io/ioutil"
 	"net/http"
 	"os"
 	"os/signal"
@@ -86,9 +85,10 @@ func main() {
 		os.Exit(0)
 	}()
 
-	/* pada code dibawah akan menjalankan server dengan port yang telah di tentukan diatas (line code 59)
+	/* pada code dibawah akan menjalankan server dengan port yang telah di tentukan diatas (line code 58)
 	 * serta handle jika terdapat error pada server maka akan exit (function utils.logger params 4 [FATAL])
 	 */
-	Utils.Logger(4, server.ListenAndServe())
-	// log.SetOutput(ioutil.Discard)
+	if err := server.ListenAndServe(); err != nil {
+	    Utils.Logger(4, err.Error())
+	}
 }
